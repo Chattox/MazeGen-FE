@@ -8,7 +8,6 @@ export const MazeDisplay = () => {
     getAPI('get-maze?height=15&width=15').then((res) => {
       if (res.status === 200) {
         setMaze(res.data);
-        console.log(maze);
       } else {
         console.log(res);
       }
