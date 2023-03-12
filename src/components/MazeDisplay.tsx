@@ -1,15 +1,22 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
+import { SimpleGrid } from '@mantine/core';
 
 export const MazeDisplay = () => {
-  const [maze, setMaze] = useState([]);
+  const [maze, setMaze] = useState([[]]);
+  const [mazeHeight, setMazeHeight] = useState(0);
+  const [mazeWidth, setMazeWidth] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const getMaze = () =>
     getAPI('get-maze?height=15&width=15').then((res) => {
       if (res.status === 200) {
         setMaze(res.data);
+        setMazeHeight(res.data.length);
+        setMazeWidth(res.data[0].length);
+        setIsLoaded(true);
       } else {
-        console.log(res);
+        console.log('Status not 200');
       }
     });
 
@@ -19,10 +26,19 @@ export const MazeDisplay = () => {
   }, []);
 
   return (
-    <p>
-      {maze.map((row: Array<number>) => (
-        <p>{row}</p>
-      ))}
-    </p>
+    <div>
+      {isLoaded ? (
+        <SimpleGrid cols={mazeWidth}>
+          {maze.map((row) =>
+            row.map((tile, i) => {
+              console.log(mazeWidth);
+              return <div key={i}>{tile}</div>;
+            })
+          )}
+        </SimpleGrid>
+      ) : (
+        <p>Loading</p>
+      )}
+    </div>
   );
 };
