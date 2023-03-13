@@ -8,6 +8,8 @@ const useStyles = createStyles(() => ({
   'maze-container': {
     height: '100%',
     width: '100%',
+    minHeight: '400px',
+    minWidth: '400px',
   },
   'maze-image': {
     maxHeight: '400px',
