@@ -1,6 +1,6 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
-import { SimpleGrid } from '@mantine/core';
+import { Loader, Grid, Container } from '@mantine/core';
 
 export const MazeDisplay = () => {
   const [maze, setMaze] = useState([[]]);
@@ -9,7 +9,7 @@ export const MazeDisplay = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getMaze = () =>
-    getAPI('get-maze?height=15&width=15').then((res) => {
+    getAPI('get-maze?height=35&width=35').then((res) => {
       if (res.status === 200) {
         setMaze(res.data);
         setMazeHeight(res.data.length);
@@ -26,19 +26,20 @@ export const MazeDisplay = () => {
   }, []);
 
   return (
-    <div>
+    <Container maw={`${mazeWidth}rem`} mah={`${mazeHeight}rem`}>
       {isLoaded ? (
-        <SimpleGrid cols={mazeWidth}>
+        <Grid columns={mazeWidth} gutter={1} maw={`${mazeWidth}rem`} mah={`${mazeHeight}rem`}>
           {maze.map((row) =>
-            row.map((tile, i) => {
-              console.log(mazeWidth);
-              return <div key={i}>{tile}</div>;
-            })
+            row.map((tile) => (
+              <Grid.Col span={1} h="16px" w="16px">
+                {tile}
+              </Grid.Col>
+            ))
           )}
-        </SimpleGrid>
+        </Grid>
       ) : (
-        <p>Loading</p>
+        <Loader color="pink" />
       )}
-    </div>
+    </Container>
   );
 };
