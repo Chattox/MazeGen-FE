@@ -1,6 +1,6 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
-import { Loader, Flex, Image, createStyles, Box, Container, Center } from '@mantine/core';
+import { Loader, Flex, Image, createStyles, Container, Center } from '@mantine/core';
 
 import { drawMaze } from '../utils/drawMaze';
 
