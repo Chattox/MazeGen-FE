@@ -1,10 +1,23 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
-import { Loader, Container, Image } from '@mantine/core';
+import { Loader, Flex, Container, Image, createStyles, Center } from '@mantine/core';
 
 import { drawMaze } from '../utils/drawMaze';
 
+const useStyles = createStyles(() => ({
+  'maze-container': {
+    height: '100%',
+    width: '100%',
+  },
+  'maze-image': {
+    maxHeight: '400px',
+    maxWidth: '400px',
+    margin: '16px',
+  },
+}));
+
 export const MazeDisplay = () => {
+  const { classes } = useStyles();
   const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -24,5 +37,13 @@ export const MazeDisplay = () => {
     //eslint-disable-next-line
   }, []);
 
-  return <Container>{isLoaded ? <Image src={mazeImgUrl} /> : <Loader color="pink" />}</Container>;
+  return (
+    <Flex justify="center" align="center" className={classes['maze-container']}>
+      {isLoaded ? (
+        <Image src={mazeImgUrl} className={classes['maze-image']} />
+      ) : (
+        <Loader color="pink" />
+      )}
+    </Flex>
+  );
 };
