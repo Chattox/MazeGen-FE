@@ -1,0 +1,7 @@
+{
+  "name": "Maze Generator",
+  "short_name": "MazeGen",
+  "display": "browser",
+  "scope": "/",
+  "start_url": "/"
+}
