@@ -20,6 +20,7 @@ const useStyles = createStyles(() => ({
 
 export const MazeDisplay = () => {
   const { classes } = useStyles();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mazeSize, setMazeSize] = useState({ x: 15, y: 15 });
   const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
