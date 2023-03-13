@@ -1,20 +1,26 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
-import { Loader, Flex, Image, createStyles } from '@mantine/core';
+import { Loader, Flex, Image, createStyles, Box, Container, Center } from '@mantine/core';
 
 import { drawMaze } from '../utils/drawMaze';
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
   'maze-container': {
     height: '100%',
     width: '100%',
     minHeight: '400px',
     minWidth: '400px',
   },
+  'image-container': {
+    backgroundColor: theme.colors.gray[3],
+    borderRadius: theme.radius.md,
+    height: '400px',
+    width: '400px',
+    padding: theme.spacing.md,
+  },
   'maze-image': {
-    maxHeight: '400px',
-    maxWidth: '400px',
-    margin: '16px',
+    height: '100%',
+    width: '100%',
   },
 }));
 
@@ -44,7 +50,11 @@ export const MazeDisplay = () => {
   return (
     <Flex justify="center" align="center" className={classes['maze-container']}>
       {isLoaded ? (
-        <Image src={mazeImgUrl} className={classes['maze-image']} />
+        <Container className={classes['image-container']}>
+          <Center>
+            <Image src={mazeImgUrl} className={classes['maze-image']} />
+          </Center>
+        </Container>
       ) : (
         <Loader color="pink" />
       )}
