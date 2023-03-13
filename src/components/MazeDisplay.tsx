@@ -1,6 +1,6 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
-import { Loader, Flex, Container, Image, createStyles, Center } from '@mantine/core';
+import { Loader, Flex, Image, createStyles } from '@mantine/core';
 
 import { drawMaze } from '../utils/drawMaze';
 
@@ -18,11 +18,12 @@ const useStyles = createStyles(() => ({
 
 export const MazeDisplay = () => {
   const { classes } = useStyles();
+  const [mazeSize, setMazeSize] = useState({ x: 15, y: 15 });
   const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getMaze = () =>
-    getAPI('get-maze?height=35&width=35').then((res) => {
+    getAPI(`get-maze?height=${mazeSize.x}&width=${mazeSize.y}`).then((res) => {
       if (res.status === 200) {
         setMazeImgUrl(drawMaze(res.data));
         setIsLoaded(true);
