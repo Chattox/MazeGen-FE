@@ -2,6 +2,7 @@ import axios from 'axios'
 
 interface Params {
   baseUrl: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   headers?: any,
   method: string
 }
@@ -13,6 +14,7 @@ const getConfig: Params = {
   method: 'get'
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAPI = async (url: string): Promise<any> => {
   return await axios({...getConfig, url: `${getConfig.baseUrl}/${url}`}).then((res) => {
     return {

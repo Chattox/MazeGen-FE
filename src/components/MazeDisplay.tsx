@@ -1,22 +1,38 @@
 import { getAPI } from '../utils/api';
 import { useEffect, useState } from 'react';
-import { Loader, Grid, Container } from '@mantine/core';
+import { Loader, Flex, Image, createStyles } from '@mantine/core';
+
+import { drawMaze } from '../utils/drawMaze';
+
+const useStyles = createStyles(() => ({
+  'maze-container': {
+    height: '100%',
+    width: '100%',
+    minHeight: '400px',
+    minWidth: '400px',
+  },
+  'maze-image': {
+    maxHeight: '400px',
+    maxWidth: '400px',
+    margin: '16px',
+  },
+}));
 
 export const MazeDisplay = () => {
-  const [maze, setMaze] = useState([[]]);
-  const [mazeHeight, setMazeHeight] = useState(0);
-  const [mazeWidth, setMazeWidth] = useState(0);
+  const { classes } = useStyles();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [mazeSize, setMazeSize] = useState({ x: 15, y: 15 });
+  const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getMaze = () =>
-    getAPI('get-maze?height=35&width=35').then((res) => {
+    getAPI(`get-maze?height=${mazeSize.x}&width=${mazeSize.y}`).then((res) => {
       if (res.status === 200) {
-        setMaze(res.data);
-        setMazeHeight(res.data.length);
-        setMazeWidth(res.data[0].length);
+        setMazeImgUrl(drawMaze(res.data));
         setIsLoaded(true);
       } else {
-        console.log('Status not 200');
+        console.log(res.status);
+        console.log(res.response);
       }
     });
 
@@ -26,20 +42,12 @@ export const MazeDisplay = () => {
   }, []);
 
   return (
-    <Container maw={`${mazeWidth}rem`} mah={`${mazeHeight}rem`}>
+    <Flex justify="center" align="center" className={classes['maze-container']}>
       {isLoaded ? (
-        <Grid columns={mazeWidth} gutter={1} maw={`${mazeWidth}rem`} mah={`${mazeHeight}rem`}>
-          {maze.map((row) =>
-            row.map((tile) => (
-              <Grid.Col span={1} h="16px" w="16px">
-                {tile}
-              </Grid.Col>
-            ))
-          )}
-        </Grid>
+        <Image src={mazeImgUrl} className={classes['maze-image']} />
       ) : (
         <Loader color="pink" />
       )}
-    </Container>
+    </Flex>
   );
 };
