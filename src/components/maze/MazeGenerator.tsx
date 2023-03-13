@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Loader, Flex, Image, createStyles, Container, Center } from '@mantine/core';
 
 import { drawMaze } from '../../utils/drawMaze';
+import { MazeProps } from './MazeContainer';
 
 const useStyles = createStyles((theme) => ({
   'maze-container': {
@@ -23,15 +24,15 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const MazeGenerator = () => {
+export const MazeGenerator = (props: { mazeSize: MazeProps }) => {
   const { classes } = useStyles();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [mazeSize, setMazeSize] = useState({ x: 51, y: 51 });
+  const { height, width } = props.mazeSize;
   const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getMaze = () =>
-    getAPI(`get-maze?height=${mazeSize.x}&width=${mazeSize.y}`).then((res) => {
+    getAPI(`get-maze?height=${height}&width=${width}`).then((res) => {
       if (res.status === 200) {
         setMazeImgUrl(drawMaze(res.data));
         setIsLoaded(true);
@@ -43,8 +44,9 @@ export const MazeGenerator = () => {
 
   useEffect(() => {
     getMaze();
+    console.log(props.mazeSize);
     //eslint-disable-next-line
-  }, []);
+  }, [props.mazeSize]);
 
   return (
     <Flex justify="center" align="center" className={classes['maze-container']}>
