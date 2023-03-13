@@ -1,15 +1,14 @@
-import { getAPI } from '../utils/api';
+import { getAPI } from '../../utils/api';
 import { useEffect, useState } from 'react';
 import { Loader, Flex, Image, createStyles, Container, Center } from '@mantine/core';
 
-import { drawMaze } from '../utils/drawMaze';
+import { drawMaze } from '../../utils/drawMaze';
 
 const useStyles = createStyles((theme) => ({
   'maze-container': {
-    height: '100%',
-    width: '100%',
     minHeight: '400px',
     minWidth: '400px',
+    margin: theme.spacing.md,
   },
   'image-container': {
     backgroundColor: theme.colors.gray[3],
@@ -24,10 +23,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const MazeDisplay = () => {
+export const MazeGenerator = () => {
   const { classes } = useStyles();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [mazeSize, setMazeSize] = useState({ x: 15, y: 15 });
+  const [mazeSize, setMazeSize] = useState({ x: 51, y: 51 });
   const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 

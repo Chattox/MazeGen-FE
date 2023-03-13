@@ -1,6 +1,6 @@
 import { Container, MantineProvider, Title } from '@mantine/core';
 import './App.css';
-import { MazeDisplay } from './components/MazeDisplay';
+import { MazeContainer } from './components/maze/MazeContainer';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <MantineProvider theme={{ colorScheme: 'light' }} withGlobalStyles withNormalizeCSS>
         <Container fluid>
           <Title order={1}>Maze Generator</Title>
-          <MazeDisplay />
+          <MazeContainer />
         </Container>
       </MantineProvider>
     </div>
