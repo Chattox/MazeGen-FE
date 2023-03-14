@@ -1,6 +1,9 @@
 import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
+  control: {
+    margin: theme.spacing.md,
+  },
   'num-picker': {
     maxWidth: '80px',
   },

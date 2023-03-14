@@ -1,8 +1,7 @@
-import { Button, Container, Group, Text } from '@mantine/core';
+import { Button, Container, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { HeightControl } from './controls/HeightControl';
-import { WidthControl } from './controls/WidthControl';
+import { SizeControl } from './controls/SizeControl';
 import { defaultMazeProps, MazeProps } from './MazeContainer';
 
 const minSize = 3,
@@ -48,19 +47,13 @@ export const MazeControls = (props: {
           }
         )}
       >
-        <Group position="center">
-          <HeightControl
-            heightErrOpened={heightErrOpened}
-            setHeightErrOpened={setHeightErrOpened}
-            getInputProps={mazeForm.getInputProps}
-          />
-
-          <WidthControl
-            widthErrOpened={widthErrOpened}
-            setWidthErrOpened={setWidthErrOpened}
-            getInputProps={mazeForm.getInputProps}
-          />
-        </Group>
+        <SizeControl
+          heightErrOpened={heightErrOpened}
+          setHeightErrOpened={setHeightErrOpened}
+          widthErrOpened={widthErrOpened}
+          setWidthErrOpened={setWidthErrOpened}
+          getInputProps={mazeForm.getInputProps}
+        />
         <Text c="dimmed" fz="sm">
           Min: 3, Max: 89. Values must be odd
         </Text>
