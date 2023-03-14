@@ -16,8 +16,8 @@ export const SizeControl = (props: {
   const { minSize, maxSize } = props.sizeLimits;
 
   return (
-    <Container>
-      <Group position="center" className={classes.control}>
+    <Container className={classes.control}>
+      <Group position="center">
         <Popover
           opened={props.heightErrOpened}
           onChange={props.setHeightErrOpened}
