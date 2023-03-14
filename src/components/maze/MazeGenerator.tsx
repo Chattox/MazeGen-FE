@@ -24,12 +24,16 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const MazeGenerator = (props: { mazeSize: MazeProps }) => {
+export const MazeGenerator = (props: {
+  mazeSize: MazeProps;
+  isLoaded: boolean;
+  setIsLoaded: React.Dispatch<boolean>;
+}) => {
   const { classes } = useStyles();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { height, width } = props.mazeSize;
+  const { isLoaded, setIsLoaded } = props;
   const [mazeImgUrl, setMazeImgUrl] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const getMaze = () =>
     getAPI(`get-maze?height=${height}&width=${width}`).then((res) => {

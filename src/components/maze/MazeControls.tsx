@@ -20,7 +20,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const minSize = 3,
-  maxSize = 89;
+  maxSize = 81;
 
 const validateSize = (size: number, axis: string) => {
   if (size < minSize) {
@@ -35,7 +35,8 @@ const validateSize = (size: number, axis: string) => {
 };
 
 export const MazeControls = (props: {
-  setMazeGenProps: React.Dispatch<React.SetStateAction<MazeProps>>;
+  setMazeGenProps: React.Dispatch<MazeProps>;
+  setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const { classes } = useStyles();
   const mazeForm = useForm({
@@ -57,6 +58,7 @@ export const MazeControls = (props: {
         onSubmit={mazeForm.onSubmit(
           (values) => {
             props.setMazeGenProps({ ...values });
+            props.setIsLoaded(false);
           },
           (validatorErrors) => {
             validatorErrors.height ? setHeightErrOpened(true) : setHeightErrOpened(false);
