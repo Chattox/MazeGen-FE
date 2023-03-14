@@ -1,14 +1,16 @@
 import { createCanvas } from 'canvas';
+import { MazeProps } from '../components/maze/MazeContainer';
 
-export const drawMaze = (maze: Array<Array<string>>) => {
+export const drawMaze = (maze: Array<Array<string>>, props: MazeProps) => {
   const tileWidth = 16;
   const tileHeight = 16;
-  const wallColour = '#000';
-  const floorColour = '#FFF';
+  const { wallColour, floorColour } = props;
   const mazeImgWidth = maze[0].length * tileWidth;
   const mazeImgHeight = maze.length * tileHeight;
   const canvas = createCanvas(mazeImgWidth, mazeImgHeight);
   const ctx = canvas.getContext('2d');
+
+  console.log(`Wall: ${wallColour}, Floor: ${floorColour}`);
 
   maze.forEach((row, i) => {
     row.forEach((tile, j) => {

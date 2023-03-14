@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { HeightControl } from './controls/HeightControl';
 import { WidthControl } from './controls/WidthControl';
-import { MazeProps } from './MazeContainer';
+import { defaultMazeProps, MazeProps } from './MazeContainer';
 
 const useStyles = createStyles((theme) => ({
   'num-picker': {
@@ -40,10 +40,7 @@ export const MazeControls = (props: {
 }) => {
   const { classes } = useStyles();
   const mazeForm = useForm({
-    initialValues: {
-      height: 15,
-      width: 15,
-    },
+    initialValues: defaultMazeProps,
     validate: {
       height: (value) => validateSize(value, 'Height'),
       width: (value) => validateSize(value, 'Width'),

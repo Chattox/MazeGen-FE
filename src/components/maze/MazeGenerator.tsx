@@ -25,20 +25,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export const MazeGenerator = (props: {
-  mazeSize: MazeProps;
+  mazeProps: MazeProps;
   isLoaded: boolean;
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const { classes } = useStyles();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { height, width } = props.mazeSize;
+  const { height, width } = props.mazeProps;
   const { isLoaded, setIsLoaded } = props;
   const [mazeImgUrl, setMazeImgUrl] = useState('');
 
   const getMaze = () =>
     getAPI(`get-maze?height=${height}&width=${width}`).then((res) => {
       if (res.status === 200) {
-        setMazeImgUrl(drawMaze(res.data));
+        setMazeImgUrl(drawMaze(res.data, props.mazeProps));
         setIsLoaded(true);
       } else {
         console.log(res.status);
@@ -49,7 +48,7 @@ export const MazeGenerator = (props: {
   useEffect(() => {
     getMaze();
     //eslint-disable-next-line
-  }, [props.mazeSize]);
+  }, [props.mazeProps]);
 
   return (
     <Flex justify="center" align="center" className={classes['maze-container']}>
