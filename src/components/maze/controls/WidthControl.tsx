@@ -13,7 +13,7 @@ export const WidthControl = (props: {
     <Popover
       opened={props.widthErrOpened}
       onChange={props.setWidthErrOpened}
-      position="top-end"
+      position="top-start"
       withArrow
       arrowSize={10}
       arrowPosition="center"
