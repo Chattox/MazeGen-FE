@@ -10,8 +10,6 @@ export const drawMaze = (maze: Array<Array<string>>, props: MazeProps) => {
   const canvas = createCanvas(mazeImgWidth, mazeImgHeight);
   const ctx = canvas.getContext('2d');
 
-  console.log(`Wall: ${wallColour}, Floor: ${floorColour}`);
-
   maze.forEach((row, i) => {
     row.forEach((tile, j) => {
       const posX = j * tileWidth;
