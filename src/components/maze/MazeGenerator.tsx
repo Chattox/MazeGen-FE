@@ -44,7 +44,6 @@ export const MazeGenerator = (props: { mazeSize: MazeProps }) => {
 
   useEffect(() => {
     getMaze();
-    console.log(props.mazeSize);
     //eslint-disable-next-line
   }, [props.mazeSize]);
 
