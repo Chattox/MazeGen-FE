@@ -1,17 +1,24 @@
-import { Button, Container, Text } from '@mantine/core';
+import { Button, Container } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { SizeControl } from './controls/SizeControl';
 import { defaultMazeProps, MazeProps } from './MazeContainer';
 
-const minSize = 3,
-  maxSize = 81;
+export interface sizeLimits {
+  minSize: number;
+  maxSize: number;
+}
+
+const sizeLimits: sizeLimits = {
+  minSize: 3,
+  maxSize: 81,
+};
 
 const validateSize = (size: number, axis: string) => {
-  if (size < minSize) {
-    return `${axis} must be higher than ${minSize}`;
-  } else if (size > maxSize) {
-    return `${axis} must be lower than ${maxSize}`;
+  if (size < sizeLimits.minSize) {
+    return `${axis} must be higher than ${sizeLimits.minSize}`;
+  } else if (size > sizeLimits.maxSize) {
+    return `${axis} must be lower than ${sizeLimits.maxSize}`;
   } else if (size % 2 === 0) {
     return `${axis} must be an odd number`;
   } else {
@@ -53,10 +60,8 @@ export const MazeControls = (props: {
           widthErrOpened={widthErrOpened}
           setWidthErrOpened={setWidthErrOpened}
           getInputProps={mazeForm.getInputProps}
+          sizeLimits={sizeLimits}
         />
-        <Text c="dimmed" fz="sm">
-          Min: 3, Max: 89. Values must be odd
-        </Text>
         <Button type="submit">Generate</Button>
       </form>
     </Container>
