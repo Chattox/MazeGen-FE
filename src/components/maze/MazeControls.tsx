@@ -1,6 +1,8 @@
-import { Button, Container, createStyles, Group, Text, NumberInput, Popover } from '@mantine/core';
+import { Button, Container, createStyles, Group, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
+import { HeightControl } from './controls/HeightControl';
+import { WidthControl } from './controls/WidthControl';
 import { MazeProps } from './MazeContainer';
 
 const useStyles = createStyles((theme) => ({
@@ -63,57 +65,17 @@ export const MazeControls = (props: {
         )}
       >
         <Group position="center">
-          <Popover
-            opened={heightErrOpened}
-            onChange={setHeightErrOpened}
-            position="top-end"
-            withArrow
-            arrowSize={10}
-            arrowPosition="center"
-            shadow="xs"
-            classNames={{ dropdown: classes.error, arrow: classes.error }}
-          >
-            <Popover.Target>
-              <NumberInput
-                defaultValue={15}
-                placeholder="Height"
-                label="Height"
-                min={3}
-                max={89}
-                step={2}
-                className={classes['num-picker']}
-                error={heightErrOpened}
-                {...mazeForm.getInputProps('height', { withError: false })}
-              />
-            </Popover.Target>
-            <Popover.Dropdown>{mazeForm.getInputProps('height').error}</Popover.Dropdown>
-          </Popover>
+          <HeightControl
+            heightErrOpened={heightErrOpened}
+            setHeightErrOpened={setHeightErrOpened}
+            getInputProps={mazeForm.getInputProps}
+          />
 
-          <Popover
-            opened={widthErrOpened}
-            onChange={setWidthErrOpened}
-            position="top-start"
-            withArrow
-            arrowSize={10}
-            arrowPosition="center"
-            shadow="xs"
-            classNames={{ dropdown: classes.error, arrow: classes.error }}
-          >
-            <Popover.Target>
-              <NumberInput
-                defaultValue={15}
-                placeholder="Width"
-                label="Width"
-                min={3}
-                max={89}
-                step={2}
-                className={classes['num-picker']}
-                error={widthErrOpened}
-                {...mazeForm.getInputProps('width', { withError: false })}
-              />
-            </Popover.Target>
-            <Popover.Dropdown>{mazeForm.getInputProps('width').error}</Popover.Dropdown>
-          </Popover>
+          <WidthControl
+            widthErrOpened={widthErrOpened}
+            setWidthErrOpened={setWidthErrOpened}
+            getInputProps={mazeForm.getInputProps}
+          />
         </Group>
         <Text c="dimmed" fz="sm" className={classes.description}>
           Min: 3, Max: 89. Values must be odd
