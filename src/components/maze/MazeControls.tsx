@@ -1,6 +1,7 @@
 import { Button, Container } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
+import { ColourControl } from './controls/ColourControl';
 import { SizeControl } from './controls/SizeControl';
 import { defaultMazeProps, MazeProps } from './MazeContainer';
 
@@ -62,6 +63,7 @@ export const MazeControls = (props: {
           getInputProps={mazeForm.getInputProps}
           sizeLimits={sizeLimits}
         />
+        <ColourControl getInputProps={mazeForm.getInputProps} />
         <Button type="submit">Generate</Button>
       </form>
     </Container>
