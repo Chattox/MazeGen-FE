@@ -1,9 +1,11 @@
 import { Button, Container } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { ColourControl } from './controls/ColourControl';
-import { SizeControl } from './controls/SizeControl';
+
 import { defaultMazeProps, MazeProps } from './MazeContainer';
+import { SizeControl } from './controls/SizeControl';
+import { ColourControl } from './controls/ColourControl';
+import { GridControl } from './controls/GridControl';
 
 export interface sizeLimits {
   minSize: number;
@@ -64,6 +66,7 @@ export const MazeControls = (props: {
           sizeLimits={sizeLimits}
         />
         <ColourControl getInputProps={mazeForm.getInputProps} />
+        <GridControl getInputProps={mazeForm.getInputProps} />
         <Button type="submit">Generate</Button>
       </form>
     </Container>
