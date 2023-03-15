@@ -1,14 +1,16 @@
-import { Container, Title } from '@mantine/core';
+import { Container, MantineProvider, Title } from '@mantine/core';
 import './App.css';
-import { MazeDisplay } from './components/MazeDisplay';
+import { MazeContainer } from './components/maze/MazeContainer';
 
 function App() {
   return (
     <div className="App">
-      <Container fluid>
-        <Title order={1}>Maze Generator</Title>
-        <MazeDisplay />
-      </Container>
+      <MantineProvider theme={{ colorScheme: 'light' }} withGlobalStyles withNormalizeCSS>
+        <Container fluid>
+          <Title order={1}>Maze Generator</Title>
+          <MazeContainer />
+        </Container>
+      </MantineProvider>
     </div>
   );
 }
