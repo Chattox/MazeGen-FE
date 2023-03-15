@@ -14,6 +14,10 @@ const useStyles = createStyles((theme) => ({
       minHeight: '250px',
       minWidth: '250px',
     },
+    [`@media (max-width: ${theme.breakpoints.xs})`]: {
+      minHeight: '175px',
+      minWidth: '175px',
+    },
   },
   'image-container': {
     backgroundColor: theme.colors.gray[3],
@@ -24,6 +28,10 @@ const useStyles = createStyles((theme) => ({
     [`@media (max-width: ${theme.breakpoints.md})`]: {
       height: '250px',
       width: '250px',
+    },
+    [`@media (max-width: ${theme.breakpoints.xs})`]: {
+      height: '175px',
+      width: '175px',
     },
   },
   'maze-image': {
