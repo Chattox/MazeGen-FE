@@ -1,6 +1,6 @@
 import { getAPI } from '../../utils/api';
 import { useEffect } from 'react';
-import { Loader, Flex, Image, createStyles, Container, Center } from '@mantine/core';
+import { Loader, Flex, Image, createStyles, Container, Center, Tooltip } from '@mantine/core';
 
 import { drawMaze } from '../../utils/drawMaze';
 import { MazeProps } from './MazeContainer';
@@ -46,6 +46,11 @@ export const MazeGenerator = (props: {
       }
     });
 
+  const viewImage = () => {
+    const newTab = window.open();
+    newTab?.document.write(`<image src="${mazeImgUrl}" />`);
+  };
+
   useEffect(() => {
     getMaze();
     //eslint-disable-next-line
@@ -56,7 +61,15 @@ export const MazeGenerator = (props: {
       {isLoaded ? (
         <Container className={classes['image-container']}>
           <Center>
-            <Image src={mazeImgUrl} className={classes['maze-image']} />
+            <Tooltip
+              label="Click for full-size image"
+              withArrow
+              arrowSize={10}
+              openDelay={300}
+              transitionProps={{ transition: 'pop' }}
+            >
+              <Image src={mazeImgUrl} className={classes['maze-image']} onClick={viewImage} />
+            </Tooltip>
           </Center>
         </Container>
       ) : (
