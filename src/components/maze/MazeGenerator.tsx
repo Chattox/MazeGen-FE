@@ -1,5 +1,5 @@
 import { getAPI } from '../../utils/api';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Loader, Flex, Image, createStyles, Container, Center } from '@mantine/core';
 
 import { drawMaze } from '../../utils/drawMaze';
@@ -26,13 +26,14 @@ const useStyles = createStyles((theme) => ({
 
 export const MazeGenerator = (props: {
   mazeProps: MazeProps;
+  mazeImgUrl: string;
+  setMazeImgUrl: React.Dispatch<string>;
   isLoaded: boolean;
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const { classes } = useStyles();
   const { height, width } = props.mazeProps;
-  const { isLoaded, setIsLoaded } = props;
-  const [mazeImgUrl, setMazeImgUrl] = useState('');
+  const { mazeImgUrl, setMazeImgUrl, isLoaded, setIsLoaded } = props;
 
   const getMaze = () =>
     getAPI(`get-maze?height=${height}&width=${width}`).then((res) => {

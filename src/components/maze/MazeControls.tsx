@@ -1,4 +1,4 @@
-import { Button, Container } from '@mantine/core';
+import { Button, Container, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 
@@ -30,6 +30,7 @@ const validateSize = (size: number, axis: string) => {
 };
 
 export const MazeControls = (props: {
+  mazeImgUrl: string;
   setMazeGenProps: React.Dispatch<MazeProps>;
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
@@ -67,7 +68,12 @@ export const MazeControls = (props: {
         />
         <ColourControl getInputProps={mazeForm.getInputProps} />
         <GridControl getInputProps={mazeForm.getInputProps} />
-        <Button type="submit">Generate</Button>
+        <Group position="center">
+          <Button type="submit">Generate</Button>
+          <Button component="a" download href={props.mazeImgUrl}>
+            Download
+          </Button>
+        </Group>
       </form>
     </Container>
   );

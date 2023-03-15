@@ -22,12 +22,23 @@ export const defaultMazeProps: MazeProps = {
 
 export const MazeContainer = () => {
   const [mazeGenProps, setMazeGenProps] = useState<MazeProps>(defaultMazeProps);
+  const [mazeImgUrl, setMazeImgUrl] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <Container>
-      <MazeGenerator mazeProps={mazeGenProps} isLoaded={isLoaded} setIsLoaded={setIsLoaded} />
-      <MazeControls setMazeGenProps={setMazeGenProps} setIsLoaded={setIsLoaded} />
+      <MazeGenerator
+        mazeProps={mazeGenProps}
+        mazeImgUrl={mazeImgUrl}
+        setMazeImgUrl={setMazeImgUrl}
+        isLoaded={isLoaded}
+        setIsLoaded={setIsLoaded}
+      />
+      <MazeControls
+        mazeImgUrl={mazeImgUrl}
+        setMazeGenProps={setMazeGenProps}
+        setIsLoaded={setIsLoaded}
+      />
     </Container>
   );
 };
