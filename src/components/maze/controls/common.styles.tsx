@@ -5,7 +5,7 @@ export const useStyles = createStyles((theme) => ({
     margin: theme.spacing.md,
   },
   'num-picker': {
-    maxWidth: '80px',
+    maxWidth: '70px',
   },
   'colour-picker': {
     maxWidth: '140px',
