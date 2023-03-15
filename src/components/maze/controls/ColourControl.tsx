@@ -19,6 +19,7 @@ export const ColourControl = (props: {
         swatches={swatches}
         swatchesPerRow={7}
         format="hex"
+        className={classes['colour-picker']}
         {...props.getInputProps('wallColour')}
       />
       <ColorInput
@@ -27,6 +28,7 @@ export const ColourControl = (props: {
         swatches={swatches}
         swatchesPerRow={7}
         format="hex"
+        className={classes['colour-picker']}
         {...props.getInputProps('floorColour')}
       />
     </Group>

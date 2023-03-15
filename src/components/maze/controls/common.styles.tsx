@@ -7,6 +7,9 @@ export const useStyles = createStyles((theme) => ({
   'num-picker': {
     maxWidth: '80px',
   },
+  'colour-picker': {
+    maxWidth: '140px',
+  },
   error: {
     backgroundColor: theme.colors.red[0],
     borderColor: theme.colors.red[3],
