@@ -14,7 +14,7 @@ export interface sizeLimits {
 
 const sizeLimits: sizeLimits = {
   minSize: 3,
-  maxSize: 501,
+  maxSize: 401,
 };
 
 const validateSize = (size: number, axis: string) => {

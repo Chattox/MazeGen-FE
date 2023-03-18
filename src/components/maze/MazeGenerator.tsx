@@ -1,9 +1,10 @@
 import { getAPI } from '../../utils/api';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader, Flex, Image, createStyles, Container, Center, Tooltip } from '@mantine/core';
 
 import { drawMaze } from '../../utils/drawMaze';
 import { MazeProps } from './MazeContainer';
+import { Error } from './Error';
 
 const useStyles = createStyles((theme) => ({
   'maze-container': {
@@ -50,6 +51,7 @@ export const MazeGenerator = (props: {
   const { classes } = useStyles();
   const { height, width } = props.mazeProps;
   const { mazeImgUrl, setMazeImgUrl, isLoaded, setIsLoaded } = props;
+  const [error, setError] = useState();
 
   const getMaze = () =>
     getAPI(`get-maze?height=${height}&width=${width}`).then((res) => {
@@ -57,8 +59,10 @@ export const MazeGenerator = (props: {
         setMazeImgUrl(drawMaze(res.data, props.mazeProps));
         setIsLoaded(true);
       } else {
+        setError(res);
+        setIsLoaded(true);
         console.log(res.status);
-        console.log(res.response);
+        console.log(res.data);
       }
     });
 
@@ -75,19 +79,23 @@ export const MazeGenerator = (props: {
   return (
     <Flex justify="center" align="center" className={classes['maze-container']}>
       {isLoaded ? (
-        <Container className={classes['image-container']}>
-          <Center>
-            <Tooltip
-              label="Click for full-size image"
-              withArrow
-              arrowSize={10}
-              openDelay={300}
-              transitionProps={{ transition: 'pop' }}
-            >
-              <Image src={mazeImgUrl} className={classes['maze-image']} onClick={viewImage} />
-            </Tooltip>
-          </Center>
-        </Container>
+        error ? (
+          <Error />
+        ) : (
+          <Container className={classes['image-container']}>
+            <Center>
+              <Tooltip
+                label="Click for full-size image"
+                withArrow
+                arrowSize={10}
+                openDelay={300}
+                transitionProps={{ transition: 'pop' }}
+              >
+                <Image src={mazeImgUrl} className={classes['maze-image']} onClick={viewImage} />
+              </Tooltip>
+            </Center>
+          </Container>
+        )
       ) : (
         <Loader color="pink" />
       )}
