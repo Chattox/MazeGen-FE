@@ -1,4 +1,4 @@
-import { Button, Container, Group } from '@mantine/core';
+import { Button, Container, Group, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 
@@ -14,7 +14,7 @@ export interface sizeLimits {
 
 const sizeLimits: sizeLimits = {
   minSize: 3,
-  maxSize: 501,
+  maxSize: 401,
 };
 
 const validateSize = (size: number, axis: string) => {
@@ -75,6 +75,10 @@ export const MazeControls = (props: {
             Download
           </Button>
         </Group>
+        <Text c="dimmed" fz="sm" sx={{ marginTop: '16px' }}>
+          Note: Bigger mazes can take a while to generate. If it breaks it will let you know, so if
+          it's still loading, give it a little more time
+        </Text>
       </form>
     </Container>
   );
