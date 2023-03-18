@@ -14,7 +14,7 @@ export interface sizeLimits {
 
 const sizeLimits: sizeLimits = {
   minSize: 3,
-  maxSize: 81,
+  maxSize: 501,
 };
 
 const validateSize = (size: number, axis: string) => {
@@ -27,6 +27,7 @@ const validateSize = (size: number, axis: string) => {
   } else {
     return null;
   }
+  return null;
 };
 
 export const MazeControls = (props: {
