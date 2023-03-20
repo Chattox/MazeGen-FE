@@ -9,22 +9,26 @@ import { GridControl } from './controls/GridControl';
 import { RoomControl } from './controls/RoomControl';
 
 export interface sizeLimits {
-  minSize: number;
-  maxSize: number;
+  minMazeSize: number;
+  maxMazeSize: number;
+  minRoomNumber: number;
+  maxRoomNumber: number;
 }
 
 const sizeLimits: sizeLimits = {
-  minSize: 3,
-  maxSize: 401,
+  minMazeSize: 3,
+  maxMazeSize: 401,
+  minRoomNumber: 0,
+  maxRoomNumber: 3,
 };
 
-const validateSize = (size: number, axis: string) => {
-  if (size < sizeLimits.minSize) {
-    return `${axis} must be higher than ${sizeLimits.minSize}`;
-  } else if (size > sizeLimits.maxSize) {
-    return `${axis} must be lower than ${sizeLimits.maxSize}`;
-  } else if (size % 2 === 0) {
-    return `${axis} must be an odd number`;
+const validateSize = (size: number, min: number, max: number, field: string) => {
+  if (size < min) {
+    return `${field} must be higher than ${min}`;
+  } else if (size > max) {
+    return `${field} must be lower than ${max}`;
+  } else if (['Height', 'Width'].includes(field) && size % 2 === 0) {
+    return `${field} must be an odd number`;
   } else {
     return null;
   }
@@ -38,12 +42,17 @@ export const MazeControls = (props: {
   const mazeForm = useForm({
     initialValues: defaultMazeProps,
     validate: {
-      height: (value) => validateSize(value, 'Height'),
-      width: (value) => validateSize(value, 'Width'),
+      height: (value) =>
+        validateSize(value, sizeLimits.minMazeSize, sizeLimits.maxMazeSize, 'Height'),
+      width: (value) =>
+        validateSize(value, sizeLimits.minMazeSize, sizeLimits.maxMazeSize, 'Width'),
+      numRooms: (value) =>
+        validateSize(value, sizeLimits.minRoomNumber, sizeLimits.maxRoomNumber, 'Room number'),
     },
   });
   const [heightErrOpened, setHeightErrOpened] = useState(false);
   const [widthErrOpened, setWidthErrOpened] = useState(false);
+  const [roomErrOpened, setRoomErrOpened] = useState(false);
 
   return (
     <Container>
@@ -56,6 +65,7 @@ export const MazeControls = (props: {
           (validatorErrors) => {
             validatorErrors.height ? setHeightErrOpened(true) : setHeightErrOpened(false);
             validatorErrors.width ? setWidthErrOpened(true) : setWidthErrOpened(false);
+            validatorErrors.numRooms ? setRoomErrOpened(true) : setRoomErrOpened(false);
           }
         )}
       >
@@ -68,7 +78,11 @@ export const MazeControls = (props: {
           sizeLimits={sizeLimits}
         />
         <ColourControl getInputProps={mazeForm.getInputProps} />
-        <RoomControl getInputProps={mazeForm.getInputProps} />
+        <RoomControl
+          roomErrOpened={roomErrOpened}
+          setRoomErrOpened={setRoomErrOpened}
+          getInputProps={mazeForm.getInputProps}
+        />
         <GridControl getInputProps={mazeForm.getInputProps} />
         <Group position="center">
           <Button type="submit">Generate</Button>
