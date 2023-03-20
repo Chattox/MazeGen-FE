@@ -6,6 +6,7 @@ import { defaultMazeProps, MazeProps } from './MazeContainer';
 import { SizeControl } from './controls/SizeControl';
 import { ColourControl } from './controls/ColourControl';
 import { GridControl } from './controls/GridControl';
+import { RoomControl } from './controls/RoomControl';
 
 export interface sizeLimits {
   minSize: number;
@@ -27,7 +28,6 @@ const validateSize = (size: number, axis: string) => {
   } else {
     return null;
   }
-  return null;
 };
 
 export const MazeControls = (props: {
@@ -68,6 +68,7 @@ export const MazeControls = (props: {
           sizeLimits={sizeLimits}
         />
         <ColourControl getInputProps={mazeForm.getInputProps} />
+        <RoomControl getInputProps={mazeForm.getInputProps} />
         <GridControl getInputProps={mazeForm.getInputProps} />
         <Group position="center">
           <Button type="submit">Generate</Button>
