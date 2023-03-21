@@ -13,7 +13,7 @@ export const SizeControl = (props: {
   sizeLimits: sizeLimits;
 }) => {
   const { classes } = useStyles();
-  const { minSize, maxSize } = props.sizeLimits;
+  const { minMazeSize, maxMazeSize } = props.sizeLimits;
 
   return (
     <Container className={classes.control}>
@@ -33,8 +33,8 @@ export const SizeControl = (props: {
               defaultValue={15}
               placeholder="Height"
               label="Height"
-              min={minSize}
-              max={maxSize}
+              min={minMazeSize}
+              max={maxMazeSize}
               step={2}
               className={classes['num-picker']}
               error={props.heightErrOpened}
@@ -59,8 +59,8 @@ export const SizeControl = (props: {
               defaultValue={15}
               placeholder="Width"
               label="Width"
-              min={minSize}
-              max={maxSize}
+              min={minMazeSize}
+              max={maxMazeSize}
               step={2}
               className={classes['num-picker']}
               error={props.widthErrOpened}
@@ -71,7 +71,7 @@ export const SizeControl = (props: {
         </Popover>
       </Group>
       <Text c="dimmed" fz="sm">
-        {`Min: ${minSize}, Max: ${maxSize}. Values must be odd`}
+        {`Min: ${minMazeSize}, Max: ${maxMazeSize}. Values must be odd`}
       </Text>
     </Container>
   );

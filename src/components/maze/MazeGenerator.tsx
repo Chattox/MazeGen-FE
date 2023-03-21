@@ -49,17 +49,18 @@ export const MazeGenerator = (props: {
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const { classes } = useStyles();
-  const { height, width } = props.mazeProps;
+  const { height, width, numRooms } = props.mazeProps;
   const { mazeImgUrl, setMazeImgUrl, isLoaded, setIsLoaded } = props;
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
 
   const getMaze = () =>
-    getAPI(`get-maze?height=${height}&width=${width}`).then((res) => {
+    getAPI(`get-maze?height=${height}&width=${width}&numRooms=${numRooms}`).then((res) => {
       if (res.status === 200) {
         setMazeImgUrl(drawMaze(res.data, props.mazeProps));
+        setError(false);
         setIsLoaded(true);
       } else {
-        setError(res);
+        setError(true);
         setIsLoaded(true);
         console.log(res.status);
         console.log(res.data);

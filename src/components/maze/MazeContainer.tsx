@@ -10,6 +10,7 @@ export interface MazeProps {
   wallColour: string;
   floorColour: string;
   hasGrid: boolean;
+  numRooms: number;
 }
 
 export const defaultMazeProps: MazeProps = {
@@ -18,6 +19,7 @@ export const defaultMazeProps: MazeProps = {
   wallColour: '#000',
   floorColour: '#FFF',
   hasGrid: false,
+  numRooms: 0,
 };
 
 export const MazeContainer = () => {
