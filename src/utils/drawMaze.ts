@@ -4,37 +4,39 @@ import { MazeProps } from '../components/maze/MazeContainer';
 export const drawMaze = (maze: Array<Array<string>>, props: MazeProps) => {
   const tileWidth = 16;
   const tileHeight = 16;
-  const { wallColour, floorColour, hasGrid } = props;
+  const { wallColour, floorColour } = props;
   const mazeImgWidth = maze[0].length * tileWidth;
   const mazeImgHeight = maze.length * tileHeight;
-  const canvas = createCanvas(mazeImgWidth, mazeImgHeight);
-  const ctx = canvas.getContext('2d');
+  const mazeCanvas = createCanvas(mazeImgWidth, mazeImgHeight);
+  const mazeCtx = mazeCanvas.getContext('2d');
+  const gridCanvas = createCanvas(mazeImgWidth, mazeImgHeight);
+  const gridCtx = gridCanvas.getContext('2d');
+  const combinedCanvas = createCanvas(mazeImgWidth, mazeImgHeight);
+  const combinedCtx = combinedCanvas.getContext('2d');
 
+  gridCtx.strokeStyle = '#888';
+  gridCtx.lineWidth = 1;
   maze.forEach((row, i) => {
     row.forEach((tile, j) => {
       const posX = j * tileWidth;
       const posY = i * tileHeight;
       if (tile === '#') {
-        ctx.fillStyle = wallColour;
-        ctx.fillRect(posX, posY, tileWidth, tileHeight);
+        mazeCtx.fillStyle = wallColour;
+        mazeCtx.fillRect(posX, posY, tileWidth, tileHeight);
       } else {
-        ctx.fillStyle = floorColour;
-        ctx.fillRect(posX, posY, tileWidth, tileHeight);
+        mazeCtx.fillStyle = floorColour;
+        mazeCtx.fillRect(posX, posY, tileWidth, tileHeight);
       }
+      gridCtx.strokeRect(posX, posY, tileWidth, tileHeight);
     });
   });
 
-  if (hasGrid) {
-    ctx.strokeStyle = '#888';
-    ctx.lineWidth = 1;
-    maze.forEach((row, i) => {
-      row.forEach((tile, j) => {
-        const posX = j * tileWidth;
-        const posY = i * tileHeight;
-        ctx.strokeRect(posX, posY, tileWidth, tileHeight);
-      });
-    });
-  }
+  combinedCtx.drawImage(mazeCanvas, 0, 0);
+  combinedCtx.drawImage(gridCanvas, 0, 0);
 
-  return canvas.toDataURL();
+  return {
+    maze: mazeCanvas.toDataURL(),
+    grid: gridCanvas.toDataURL(),
+    combined: combinedCanvas.toDataURL(),
+  };
 };

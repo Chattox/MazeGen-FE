@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 
 import { MazeControls } from './MazeControls';
@@ -9,7 +9,6 @@ export interface MazeProps {
   width: number;
   wallColour: string;
   floorColour: string;
-  hasGrid: boolean;
   numRooms: number;
 }
 
@@ -18,14 +17,19 @@ export const defaultMazeProps: MazeProps = {
   width: 15,
   wallColour: '#000',
   floorColour: '#FFF',
-  hasGrid: false,
   numRooms: 0,
 };
 
 export const MazeContainer = () => {
   const [mazeGenProps, setMazeGenProps] = useState<MazeProps>(defaultMazeProps);
   const [mazeImgUrl, setMazeImgUrl] = useState('');
+  const [gridImgUrl, setGridImgUrl] = useState('');
+  const [hasGrid, setHasGrid] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    console.log('derp');
+  }, [mazeGenProps]);
 
   return (
     <Container>
@@ -33,12 +37,18 @@ export const MazeContainer = () => {
         mazeProps={mazeGenProps}
         mazeImgUrl={mazeImgUrl}
         setMazeImgUrl={setMazeImgUrl}
+        gridImgUrl={gridImgUrl}
+        setGridImgUrl={setGridImgUrl}
+        hasGrid={hasGrid}
         isLoaded={isLoaded}
         setIsLoaded={setIsLoaded}
       />
       <MazeControls
         mazeImgUrl={mazeImgUrl}
+        gridImgUrl={gridImgUrl}
         setMazeGenProps={setMazeGenProps}
+        hasGrid={hasGrid}
+        setHasGrid={setHasGrid}
         setIsLoaded={setIsLoaded}
       />
     </Container>

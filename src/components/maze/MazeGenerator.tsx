@@ -45,18 +45,24 @@ export const MazeGenerator = (props: {
   mazeProps: MazeProps;
   mazeImgUrl: string;
   setMazeImgUrl: React.Dispatch<string>;
+  gridImgUrl: string;
+  setGridImgUrl: React.Dispatch<string>;
+  hasGrid: boolean;
   isLoaded: boolean;
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const { classes } = useStyles();
   const { height, width, numRooms } = props.mazeProps;
-  const { mazeImgUrl, setMazeImgUrl, isLoaded, setIsLoaded } = props;
+  const { mazeImgUrl, setMazeImgUrl, gridImgUrl, setGridImgUrl, hasGrid, isLoaded, setIsLoaded } =
+    props;
   const [error, setError] = useState(false);
 
   const getMaze = () =>
     getAPI(`get-maze?height=${height}&width=${width}&numRooms=${numRooms}`).then((res) => {
       if (res.status === 200) {
-        setMazeImgUrl(drawMaze(res.data, props.mazeProps));
+        const dataURLs = drawMaze(res.data, props.mazeProps);
+        setMazeImgUrl(dataURLs.maze);
+        setGridImgUrl(dataURLs.combined);
         setError(false);
         setIsLoaded(true);
       } else {
@@ -67,14 +73,13 @@ export const MazeGenerator = (props: {
       }
     });
 
-  const viewImage = () => {
+  const viewImage = (imgUrl: string) => {
     const newTab = window.open();
-    newTab?.document.write(`<image src="${mazeImgUrl}" />`);
+    newTab?.document.write(`<image src="${imgUrl}" />`);
   };
 
   useEffect(() => {
     getMaze();
-    //eslint-disable-next-line
   }, [props.mazeProps]);
 
   return (
@@ -92,7 +97,11 @@ export const MazeGenerator = (props: {
                 openDelay={300}
                 transitionProps={{ transition: 'pop' }}
               >
-                <Image src={mazeImgUrl} className={classes['maze-image']} onClick={viewImage} />
+                <Image
+                  src={hasGrid ? gridImgUrl : mazeImgUrl}
+                  className={classes['maze-image']}
+                  onClick={() => viewImage(hasGrid ? gridImgUrl : mazeImgUrl)}
+                />
               </Tooltip>
             </Center>
           </Container>
