@@ -1,6 +1,15 @@
 import { getAPI } from '../../utils/api';
 import { useEffect, useState } from 'react';
-import { Loader, Flex, Image, createStyles, Container, Center, Tooltip } from '@mantine/core';
+import {
+  Loader,
+  Flex,
+  Image,
+  createStyles,
+  Container,
+  Center,
+  Tooltip,
+  BackgroundImage,
+} from '@mantine/core';
 
 import { drawMaze } from '../../utils/drawMaze';
 import { MazeProps } from './MazeContainer';
@@ -45,18 +54,24 @@ export const MazeGenerator = (props: {
   mazeProps: MazeProps;
   mazeImgUrl: string;
   setMazeImgUrl: React.Dispatch<string>;
+  gridImgUrl: string;
+  setGridImgUrl: React.Dispatch<string>;
+  hasGrid: boolean;
   isLoaded: boolean;
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const { classes } = useStyles();
   const { height, width, numRooms } = props.mazeProps;
-  const { mazeImgUrl, setMazeImgUrl, isLoaded, setIsLoaded } = props;
+  const { mazeImgUrl, setMazeImgUrl, gridImgUrl, setGridImgUrl, hasGrid, isLoaded, setIsLoaded } =
+    props;
   const [error, setError] = useState(false);
 
   const getMaze = () =>
     getAPI(`get-maze?height=${height}&width=${width}&numRooms=${numRooms}`).then((res) => {
       if (res.status === 200) {
-        setMazeImgUrl(drawMaze(res.data, props.mazeProps));
+        const dataURLs = drawMaze(res.data, props.mazeProps);
+        setMazeImgUrl(dataURLs.maze);
+        setGridImgUrl(dataURLs.grid);
         setError(false);
         setIsLoaded(true);
       } else {
@@ -74,7 +89,6 @@ export const MazeGenerator = (props: {
 
   useEffect(() => {
     getMaze();
-    //eslint-disable-next-line
   }, [props.mazeProps]);
 
   return (
@@ -92,7 +106,17 @@ export const MazeGenerator = (props: {
                 openDelay={300}
                 transitionProps={{ transition: 'pop' }}
               >
-                <Image src={mazeImgUrl} className={classes['maze-image']} onClick={viewImage} />
+                <BackgroundImage
+                  src={mazeImgUrl}
+                  className={classes['maze-image']}
+                  onClick={viewImage}
+                >
+                  {hasGrid ? (
+                    <Image src={gridImgUrl} className={classes['maze-image']} />
+                  ) : (
+                    <Image src={mazeImgUrl} className={classes['maze-image']} />
+                  )}
+                </BackgroundImage>
               </Tooltip>
             </Center>
           </Container>

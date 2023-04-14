@@ -37,6 +37,8 @@ const validateSize = (size: number, min: number, max: number, field: string) => 
 export const MazeControls = (props: {
   mazeImgUrl: string;
   setMazeGenProps: React.Dispatch<MazeProps>;
+  hasGrid: boolean;
+  setHasGrid: React.Dispatch<boolean>;
   setIsLoaded: React.Dispatch<boolean>;
 }) => {
   const mazeForm = useForm({
@@ -53,6 +55,7 @@ export const MazeControls = (props: {
   const [heightErrOpened, setHeightErrOpened] = useState(false);
   const [widthErrOpened, setWidthErrOpened] = useState(false);
   const [roomErrOpened, setRoomErrOpened] = useState(false);
+  const { hasGrid, setHasGrid } = props;
 
   return (
     <Container>
@@ -83,7 +86,7 @@ export const MazeControls = (props: {
           setRoomErrOpened={setRoomErrOpened}
           getInputProps={mazeForm.getInputProps}
         />
-        <GridControl getInputProps={mazeForm.getInputProps} />
+        <GridControl hasGrid={hasGrid} setHasGrid={setHasGrid} />
         <Group position="center">
           <Button type="submit">Generate</Button>
           <Button component="a" download href={props.mazeImgUrl}>
