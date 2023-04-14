@@ -1,15 +1,6 @@
 import { getAPI } from '../../utils/api';
 import { useEffect, useState } from 'react';
-import {
-  Loader,
-  Flex,
-  Image,
-  createStyles,
-  Container,
-  Center,
-  Tooltip,
-  BackgroundImage,
-} from '@mantine/core';
+import { Loader, Flex, Image, createStyles, Container, Center, Tooltip } from '@mantine/core';
 
 import { drawMaze } from '../../utils/drawMaze';
 import { MazeProps } from './MazeContainer';
@@ -71,7 +62,7 @@ export const MazeGenerator = (props: {
       if (res.status === 200) {
         const dataURLs = drawMaze(res.data, props.mazeProps);
         setMazeImgUrl(dataURLs.maze);
-        setGridImgUrl(dataURLs.grid);
+        setGridImgUrl(dataURLs.combined);
         setError(false);
         setIsLoaded(true);
       } else {
@@ -82,9 +73,9 @@ export const MazeGenerator = (props: {
       }
     });
 
-  const viewImage = () => {
+  const viewImage = (imgUrl: string) => {
     const newTab = window.open();
-    newTab?.document.write(`<image src="${mazeImgUrl}" />`);
+    newTab?.document.write(`<image src="${imgUrl}" />`);
   };
 
   useEffect(() => {
@@ -106,17 +97,11 @@ export const MazeGenerator = (props: {
                 openDelay={300}
                 transitionProps={{ transition: 'pop' }}
               >
-                <BackgroundImage
-                  src={mazeImgUrl}
+                <Image
+                  src={hasGrid ? gridImgUrl : mazeImgUrl}
                   className={classes['maze-image']}
-                  onClick={viewImage}
-                >
-                  {hasGrid ? (
-                    <Image src={gridImgUrl} className={classes['maze-image']} />
-                  ) : (
-                    <Image src={mazeImgUrl} className={classes['maze-image']} />
-                  )}
-                </BackgroundImage>
+                  onClick={() => viewImage(hasGrid ? gridImgUrl : mazeImgUrl)}
+                />
               </Tooltip>
             </Center>
           </Container>

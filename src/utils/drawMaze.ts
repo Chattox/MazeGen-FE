@@ -11,6 +11,8 @@ export const drawMaze = (maze: Array<Array<string>>, props: MazeProps) => {
   const mazeCtx = mazeCanvas.getContext('2d');
   const gridCanvas = createCanvas(mazeImgWidth, mazeImgHeight);
   const gridCtx = gridCanvas.getContext('2d');
+  const combinedCanvas = createCanvas(mazeImgWidth, mazeImgHeight);
+  const combinedCtx = combinedCanvas.getContext('2d');
 
   gridCtx.strokeStyle = '#888';
   gridCtx.lineWidth = 1;
@@ -29,8 +31,12 @@ export const drawMaze = (maze: Array<Array<string>>, props: MazeProps) => {
     });
   });
 
+  combinedCtx.drawImage(mazeCanvas, 0, 0);
+  combinedCtx.drawImage(gridCanvas, 0, 0);
+
   return {
     maze: mazeCanvas.toDataURL(),
     grid: gridCanvas.toDataURL(),
+    combined: combinedCanvas.toDataURL(),
   };
 };

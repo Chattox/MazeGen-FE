@@ -45,6 +45,7 @@ export const MazeContainer = () => {
       />
       <MazeControls
         mazeImgUrl={mazeImgUrl}
+        gridImgUrl={gridImgUrl}
         setMazeGenProps={setMazeGenProps}
         hasGrid={hasGrid}
         setHasGrid={setHasGrid}
